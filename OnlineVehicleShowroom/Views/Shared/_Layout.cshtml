@@ -1,0 +1,297 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using System.IdentityModel.Tokens.Jwt
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - OnlineVehicleShowroom</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide">
+    <link rel="stylesheet" href="~/js/site.js" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body {
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+        }
+    </style>
+</head>
+<body background="/Images/car.jpg">
+    <header>
+        <h1 style="text-align:center; padding-top:20px;">
+            @*<a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><strong>ONLINE VEHICLE SHOWROOM</strong></a>*@
+            <strong>ONLINE VEHICLE SHOWROOM</strong>
+        </h1>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <partial name="_LoginPartial" />
+                    <ul class="navbar-nav flex-grow-1">
+                        <li>
+                            <a class="active" asp-area="" asp-controller="Home" asp-action="Index"><i class="fa fa-fw fa-home"></i> Home &nbsp;</a>
+                        </li>
+                        <li>
+                            <a class="active" asp-area="" asp-controller="Home" asp-action="Privacy"><i class="fa fa-fw fa-search"></i> Privacy &nbsp;</a>
+                        </li>
+                        <li>
+                            <a class="active" asp-area="" asp-controller="Home" asp-action="Contact"><i class="fa fa-fw fa-envelope"></i> Contact &nbsp;</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div>
+        <div class="row" style="float:left;">
+            <div class="col-3">
+                <div class="nav flex-column nav-pills" id="v-pills-tab" aria-orientation="vertical" style="padding-left:10px;">
+                    @{ var stringToken = HttpContextAccessor.HttpContext.Session.GetString("token");
+                        if (!string.IsNullOrEmpty(stringToken))
+                        {
+                            var handler = new JwtSecurityTokenHandler();
+                            var token = handler.ReadJwtToken(stringToken);
+                            var roles = token.Claims.Where(claim => claim.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role");
+                            if (roles.Any(role => role.Value.ToLower() == "admins"))
+                            {
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-secondary">Roles</button>
+                                    <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span class="sr-only">Toggle Dropdown</span>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a asp-controller="Roles" asp-action="Roles" class="dropdown-item">Create</a>
+                                        <a asp-controller="Roles" asp-action="Roles" class="dropdown-item">Roles</a>
+                                        <a asp-controller="Roles" asp-action="Roles" class="dropdown-item">Update</a>
+                                    </div>
+                                </div> }
+                        } }
+                    <br />
+                    @{ if (!string.IsNullOrEmpty(stringToken))
+                        {
+                            var handler = new JwtSecurityTokenHandler();
+                            var token = handler.ReadJwtToken(stringToken);
+                            var roles = token.Claims.Where(claim => claim.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role");
+                            if (roles.Any(role => role.Value.ToLower() == "admins"))
+                            {
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-secondary">Customers</button>
+                                    <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span class="sr-only">Toggle Dropdown</span>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a asp-controller="Customers" asp-action="Create" class="dropdown-item">Create</a>
+                                        <a asp-controller="Customers" asp-action="GetAllCustomers" class="dropdown-item">GetAllCustomers</a>
+                                    </div>
+                                </div> }
+                        } }
+                    <br />
+                    @{ if (!string.IsNullOrEmpty(stringToken))
+                        {
+                            var handler = new JwtSecurityTokenHandler();
+                            var token = handler.ReadJwtToken(stringToken);
+                            var roles = token.Claims.Where(claim => claim.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role");
+                            if (roles.Any(role => role.Value.ToLower() == "admins"))
+                            {
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-secondary">Dealers</button>
+                                    <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span class="sr-only">Toggle Dropdown</span>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a asp-controller="Dealers" asp-action="Create" class="dropdown-item">Create</a>
+                                        <a asp-controller="Dealers" asp-action="GetAllDealers" class="dropdown-item">GetAllDealers</a>
+                                    </div>
+                                </div> }
+                        } }
+                    <br />
+                    @{ if (!string.IsNullOrEmpty(stringToken))
+                        {
+                            var handler = new JwtSecurityTokenHandler();
+                            var token = handler.ReadJwtToken(stringToken);
+                            var roles = token.Claims.Where(claim => claim.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role");
+                            if (roles.Any(role => role.Value.ToLower() == "admins"))
+                            {
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-secondary">Vehicles</button>
+                                    <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span class="sr-only">Toggle Dropdown</span>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a asp-controller="Vehicles" asp-action="New" class="dropdown-item">Create</a>
+                                        <a asp-controller="Vehicles" asp-action="GetAllVehicles" class="dropdown-item">GetAllVehicles</a>
+                                    </div>
+                                </div> }
+                        } }
+                    <br />
+                    @{ if (!string.IsNullOrEmpty(stringToken))
+                        {
+                            var handler = new JwtSecurityTokenHandler();
+                            var token = handler.ReadJwtToken(stringToken);
+                            var roles = token.Claims.Where(claim => claim.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role");
+                            if (roles.Any(role => role.Value.ToLower() == "admins"))
+                            {
+
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-secondary">Showrooms</button>
+                                    <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span class="sr-only">Toggle Dropdown</span>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a asp-controller="Showrooms" asp-action="Create" class="dropdown-item">Create</a>
+                                        <a asp-controller="Showrooms" asp-action="GetAllShowrooms" class="dropdown-item">GetAllShowrooms</a>
+                                    </div>
+                                </div> }
+                        } }
+                    <br />
+                    @{ if (!string.IsNullOrEmpty(stringToken))
+                        {
+                            var handler = new JwtSecurityTokenHandler();
+                            var token = handler.ReadJwtToken(stringToken);
+                            var roles = token.Claims.Where(claim => claim.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role");
+                            if (roles.Any(role => role.Value.ToLower() == "admins"))
+                            {
+
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-secondary">Sales</button>
+                                    <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span class="sr-only">Toggle Dropdown</span>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a asp-controller="Sales" asp-action="Create" class="dropdown-item">Create</a>
+                                        <a asp-controller="Sales" asp-action="GetAllSales" class="dropdown-item">GetAllSales</a>
+                                    </div>
+                                </div> }
+                        } }
+                    <br />
+                    @*@{ if (!string.IsNullOrEmpty(stringToken))
+                            {
+                                var handler = new JwtSecurityTokenHandler();
+                                var token = handler.ReadJwtToken(stringToken);
+                                var roles = token.Claims.Where(claim => claim.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role");
+                                if (roles.Any(role => role.Value.ToLower() == "admins"))
+                                {
+
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-secondary">GenerateBills</button>
+                                        <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <span class="sr-only">Toggle Dropdown</span>
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <a asp-controller="GenerateBill" asp-action="Create" class="dropdown-item">Create</a>
+                                            <a asp-controller="GenerateBill" asp-action="GetAllGenerateBill" class="dropdown-item" >GenerateBill</a>
+                                        </div>
+                                    </div> }
+                            } }
+                        <br />*@
+                    @*@{ if (!string.IsNullOrEmpty(stringToken))
+                            {
+                                var handler = new JwtSecurityTokenHandler();
+                                var token = handler.ReadJwtToken(stringToken);
+                                var roles = token.Claims.Where(claim => claim.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role");
+                                if (roles.Any(role => role.Value.ToLower() == "admins"))
+                                {
+
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-secondary">PurchaseData</button>
+                                        <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <span class="sr-only">Toggle Dropdown</span>
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <a asp-controller="GeneratePurchaseData" asp-action="Create" class="dropdown-item">Create</a>
+                                            <a asp-controller="GeneratePurchaseData" asp-action="GetAllGeneratePurchaseData" class="dropdown-item" >GeneratePurchaseData</a>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        }*@
+                    @{ if (!string.IsNullOrEmpty(stringToken))
+                        {
+                            var handler = new JwtSecurityTokenHandler();
+                            var token = handler.ReadJwtToken(stringToken);
+                            var roles = token.Claims.Where(claim => claim.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role");
+                            if (roles.Any(role => role.Value.ToLower() == "customers"))
+                            {
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-secondary">Vehicles</button>
+                                    <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span class="sr-only">Toggle Dropdown</span>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a asp-controller="Vehicles" asp-action="GetAllVehicles" class="dropdown-item">GetAllVehicles</a>
+                                    </div>
+                                </div> }
+                        } }
+                    <br />
+                    @{ if (!string.IsNullOrEmpty(stringToken))
+                        {
+                            var handler = new JwtSecurityTokenHandler();
+                            var token = handler.ReadJwtToken(stringToken);
+                            var roles = token.Claims.Where(claim => claim.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role");
+                            if (roles.Any(role => role.Value.ToLower() == "customers"))
+                            {
+
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-secondary">GenerateBills</button>
+                                    <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span class="sr-only">Toggle Dropdown</span>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a asp-controller="GenerateBill" asp-action="GetAllGenerateBill" class="dropdown-item">GenerateBill</a>
+                                    </div>
+                                </div> }
+                        } }
+                    <br />
+                    @{ if (!string.IsNullOrEmpty(stringToken))
+                        {
+                            var handler = new JwtSecurityTokenHandler();
+                            var token = handler.ReadJwtToken(stringToken);
+                            var roles = token.Claims.Where(claim => claim.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role");
+                            if (roles.Any(role => role.Value.ToLower() == "customers"))
+                            {
+
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-secondary">PurchaseData</button>
+                                    <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span class="sr-only">Toggle Dropdown</span>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a asp-controller="GeneratePurchaseData" asp-action="GetAllGeneratePurchaseData" class="dropdown-item">GeneratePurchaseData</a>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    }
+                    <br /><br /><br /><br /><br />
+                </div>
+            </div>
+        </div>
+        <div class="container" style="width:80%; padding-left:50px">
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
+    </div>
+    <br /><br /><br /><br />
+    <footer class="border-top footer text-muted" style="text-align:center;">
+        <div class="container">
+            &copy; 2021 - OnlineVehicleShowroom - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @if (IsSectionDefined("Scripts"))
+    {
+       @RenderSection("Scripts", required: true)
+    }
+</body>
+</html>

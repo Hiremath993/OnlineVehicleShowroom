@@ -1,0 +1,225 @@
+﻿@model IEnumerable<Vehicle>
+
+@{
+    ViewData["Title"] = "GetAllVehicles";
+}
+
+<h1>GetAllVehicles</h1>
+@{var stringToken = HttpContextAccessor.HttpContext.Session.GetString("token");
+    if (!string.IsNullOrEmpty(stringToken))
+    {
+        var handler = new JwtSecurityTokenHandler();
+        var token = handler.ReadJwtToken(stringToken);
+        var roles = token.Claims.Where(claim => claim.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role");
+        if (roles.Any(role => role.Value.ToLower() == "admins"))
+        {
+            <p>
+                <a asp-action="New" >Create New</a>
+            </p>
+        }
+    } }
+
+<script>
+    function myFunction1() {
+        // Declare variables
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput1");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+
+        // Loop through all table rows, and hide those who don't match the search query
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+    function myFunction2() {
+        // Declare variables
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput2");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+
+        // Loop through all table rows, and hide those who don't match the search query
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[1];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+
+    function myFunction3() {
+        // Declare variables
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput3");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+
+        // Loop through all table rows, and hide those who don't match the search query
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[2];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+
+    function myFunction5() {
+        // Declare variables
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput5");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+
+        // Loop through all table rows, and hide those who don't match the search query
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[8];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+
+    function myFunction4() {
+        // Declare variables
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput4");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+
+        // Loop through all table rows, and hide those who don't match the search query
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[7];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
+<input type="text" id="myInput1" onkeyup="myFunction1()" placeholder="Search by Vehicle ID.." style="width:30%">
+<input type="text" id="myInput2" onkeyup="myFunction2()" placeholder="Search by Vehicle Name.." style="width:30%">
+<input type="text" id="myInput3" onkeyup="myFunction3()" placeholder="Search by Vehicle Model.." style="width:30%">
+
+<input type="text" id="myInput4" onkeyup="myFunction4()" placeholder="Search by Dealer ID.." style="width:30%;">
+<input type="text" id="myInput5" onkeyup="myFunction5()" placeholder="Search by Rating.." style="width: 30%;">
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.VehicleID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VehicleName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VehicleModel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cost)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VehicleImage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalStock)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DealerID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Rating)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody id="myTable">
+        @foreach (var item in Model)
+        {
+            var photoPath = "~/Images/" + (item.VehicleImage);
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VehicleID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VehicleName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VehicleModel)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cost)
+                </td>
+                <td>
+                    <img src="@photoPath"
+                         height="100" width="150"
+                         asp-append-version="true" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalStock)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DealerID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Rating)
+                </td>
+                <td>
+                    @{
+                        if (!string.IsNullOrEmpty(stringToken))
+                        {
+                            var handler = new JwtSecurityTokenHandler();
+                            var token = handler.ReadJwtToken(stringToken);
+                            var roles = token.Claims.Where(claim => claim.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role");
+                            if (roles.Any(role => role.Value.ToLower() == "admins"))
+                            {
+                                @Html.ActionLink("Edit", "Edit", new { id = item.VehicleID })
+                                @Html.ActionLink("Delete", "Delete", new { id = item.VehicleID })
+                            }
+
+                        } }
+                    @Html.ActionLink("DetailsByID", "DetailsByID", new { id = item.VehicleID }) |
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

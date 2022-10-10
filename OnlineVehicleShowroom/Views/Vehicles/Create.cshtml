@@ -1,0 +1,90 @@
+﻿@model OnlineVehicleShowroom.Models.VehicleViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Vehicle</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="VehicleID" class="control-label"></label>
+                <input asp-for="VehicleID" class="form-control" />
+                <span asp-validation-for="VehicleID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VehicleName" class="control-label"></label>
+                <input asp-for="VehicleName" class="form-control" />
+                <span asp-validation-for="VehicleName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VehicleModel" class="control-label"></label>
+                <input asp-for="VehicleModel" class="form-control" />
+                <span asp-validation-for="VehicleModel" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Cost" class="control-label"></label>
+                <input asp-for="Cost" class="form-control" />
+                <span asp-validation-for="Cost" class="text-danger"></span>
+            </div>
+            @*<div class="form-group">
+                    <label asp-for="VehicleImage" class="control-label"></label>
+                    <input asp-for="VehicleImage" class="form-control" />
+                    <span asp-validation-for="VehicleImage" class="text-danger"></span>
+                </div>*@
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="VehiclePicture" class="control-label"></label>
+                    <div class="custom-file">
+                        <input asp-for="VehiclePicture" class="custom-file-input" id="customFile">
+                        <label class="custom-file-label" for="customFile">Choose file</label>
+                    </div>
+                    <span asp-validation-for="VehiclePicture" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TotalStock" class="control-label"></label>
+                <input asp-for="TotalStock" class="form-control" />
+                <span asp-validation-for="TotalStock" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DealerID" class="control-label"></label>
+                <input asp-for="DealerID" class="form-control" />
+                <span asp-validation-for="DealerID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Rating" class="control-label"></label>
+                <input asp-for="Rating" class="form-control" />
+                <span asp-validation-for="Rating" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="GetAllVehicles">Back to List</a>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+
+        // Add the following code if you want the name of the file appear on select
+        $(".custom-file-input").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+    </script>
+}

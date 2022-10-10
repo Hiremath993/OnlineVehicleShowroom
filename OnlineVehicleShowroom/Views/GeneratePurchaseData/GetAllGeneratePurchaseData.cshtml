@@ -1,0 +1,130 @@
+﻿@model IEnumerable<OnlineVehicleShowroom.Entities.Invoice.GeneratePurchaseData>
+
+@{
+    ViewData["Title"] = "GetAllGeneratePurchaseData";
+}
+
+<h1>GetAllGeneratePurchaseData</h1>
+@{var stringToken = HttpContextAccessor.HttpContext.Session.GetString("token");
+    if (!string.IsNullOrEmpty(stringToken))
+    {
+        var handler = new JwtSecurityTokenHandler();
+        var token = handler.ReadJwtToken(stringToken);
+        var roles = token.Claims.Where(claim => claim.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role");
+        if (roles.Any(role => role.Value.ToLower() == "admins"))
+        {
+            <p>
+                <a asp-action="Create">Create New</a>
+            </p>
+        }
+    } }
+
+<script>
+    function myFunction() {
+        // Declare variables
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+
+        // Loop through all table rows, and hide those who don't match the search query
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[1];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
+<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search by Customer ID.." style="width:30%">
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PurchaseID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CustomerID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CustomerName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SalesID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VehicleID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ShowroomName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DeliveryDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cost)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody id="myTable">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PurchaseID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CustomerID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CustomerName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SalesID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VehicleID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ShowroomName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DeliveryDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cost)
+                </td>
+                <td>
+
+                    @{
+                        if (!string.IsNullOrEmpty(stringToken))
+                        {
+                            var handler = new JwtSecurityTokenHandler();
+                            var token = handler.ReadJwtToken(stringToken);
+                            var roles = token.Claims.Where(claim => claim.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role");
+                            if (roles.Any(role => role.Value.ToLower() == "admins"))
+                            {
+                                @Html.ActionLink("Edit", "Edit", new { id = item.PurchaseID })
+                                @Html.ActionLink("Delete", "Delete", new { id = item.PurchaseID })
+                            }
+
+                        } }
+                    @Html.ActionLink("Details", "Details", new { id = item.PurchaseID }) |
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
